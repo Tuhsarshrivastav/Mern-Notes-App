@@ -4,6 +4,9 @@ import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MyNotes from "./pages/MyNotes";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
 function App() {
   return (
     <Router>
@@ -11,6 +14,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/mynotes" component={MyNotes} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
       </Switch>
       <Footer />
     </Router>

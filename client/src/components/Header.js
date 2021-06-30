@@ -6,13 +6,23 @@ import {
   FormControl,
   Container,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { logout } from "../actions/userActions";
 const Header = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const LogoutHandler = () => {
+    dispatch(logout());
+    history.push("/");
+  };
+
   return (
     <Navbar bg="light" expand="lg" varint="dark">
       <Container>
         <Navbar.Brand>
-          <Link to="/">Note Zipper</Link>
+          <Link to="/">Notes-Zipper</Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -31,8 +41,10 @@ const Header = () => {
               <Link to="/mynotes">My Notes</Link>
             </Nav.Link>
             <NavDropdown title="Tushar" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">My Profile</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">Logout</NavDropdown.Item>
+              <NavDropdown.Item>My Profile</NavDropdown.Item>
+              <NavDropdown.Item onClick={LogoutHandler}>
+                Logout
+              </NavDropdown.Item>
               <NavDropdown.Divider />
             </NavDropdown>
           </Nav>
