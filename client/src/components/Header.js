@@ -3,15 +3,17 @@ import {
   Nav,
   NavDropdown,
   Form,
-
   FormControl,
   Container,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <Navbar bg="light" expand="lg" varint="dark">
       <Container>
-        <Navbar.Brand href="/">Note Zipper</Navbar.Brand>
+        <Navbar.Brand>
+          <Link to="/">Note Zipper</Link>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="m-auto">
@@ -25,7 +27,9 @@ const Header = () => {
             </Form>
           </Nav>
           <Nav>
-            <Nav.Link href="#action1">My Notes</Nav.Link>
+            <Nav.Link>
+              <Link to="/mynotes">My Notes</Link>
+            </Nav.Link>
             <NavDropdown title="Tushar" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">My Profile</NavDropdown.Item>
               <NavDropdown.Item href="#action4">Logout</NavDropdown.Item>

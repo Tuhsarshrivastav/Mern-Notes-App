@@ -1,4 +1,4 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Button } from "react-bootstrap";
 import "./LandingPage.css";
 const LandingPage = () => {
   return (
