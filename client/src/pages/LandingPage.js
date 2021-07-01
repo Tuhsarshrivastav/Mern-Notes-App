@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Container, Row, Button } from "react-bootstrap";
 import "./LandingPage.css";
+import {Link} from 'react-router-dom'
 const LandingPage = ({history}) => {
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
@@ -18,7 +19,7 @@ const LandingPage = ({history}) => {
               <p className="subtitle">One Safe Place for all your Notes</p>
             </div>
             <div className="buttonContainer">
-              <a href="/login">
+              <Link to="/login">
                 <Button
                   size="lg"
                   variant="outline-primary"
@@ -26,8 +27,8 @@ const LandingPage = ({history}) => {
                 >
                   Login
                 </Button>
-              </a>
-              <a href="/register">
+              </Link>
+              <Link to="/register">
                 <Button
                   variant="outline-primary"
                   className="landingbutton"
@@ -35,7 +36,7 @@ const LandingPage = ({history}) => {
                 >
                   Register
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
         </Row>

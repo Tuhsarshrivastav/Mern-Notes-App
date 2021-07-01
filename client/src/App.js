@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import CreateNote from "./pages/CreateNote";
 import SingleNote from "./pages/SingleNote";
 import { useState } from "react";
+import ProfileScreen from "./pages/ProfileScreen";
 function App() {
   const [search, setSearch] = useState("");
   return (
@@ -27,6 +28,7 @@ function App() {
 
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/profile" component={ProfileScreen} />
         <Route exact path="/createnote" component={CreateNote} />
         <Route exact path="/note/:id" component={SingleNote} />
       </Switch>

@@ -1,6 +1,6 @@
 const Auth = require("../models/authModel");
 const asyncHandler = require("express-async-handler");
-const generateToken = require('../utils/generateToken')
+const generateToken = require("../utils/generateToken");
 module.exports.registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, pic } = req.body;
   if (!name | !email | !password | !pic) {
@@ -29,7 +29,7 @@ module.exports.registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       pic: user.pic,
-      token:generateToken(user._id)
+      token: generateToken(user._id),
     });
   } else {
     return res.status(400).json({
@@ -49,12 +49,38 @@ module.exports.loginUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       pic: user.pic,
-      token:generateToken(user._id)
+      token: generateToken(user._id),
     });
   } else {
     return res.status(400).json({
       status: false,
       message: "Something went wrong",
+    });
+  }
+});
+module.exports.updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await Auth.findById(req.user._id);
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.pic = req.body.pic || user.pic;
+
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      pic: updatedUser.pic,
+      token: generateToken(updatedUser._id),
+    });
+  } else {
+    res.status(404).json({
+      status: false,
+      message: "User not found",
     });
   }
 });

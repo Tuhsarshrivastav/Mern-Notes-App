@@ -6,12 +6,13 @@ import {
   FormControl,
   Container,
 } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logout } from "../actions/userActions";
-const Header = () => {
+const Header = ({ setSearch }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.userLogin);
 
   const LogoutHandler = () => {
     dispatch(logout());
@@ -31,22 +32,35 @@ const Header = () => {
               <FormControl
                 type="search"
                 placeholder="Search"
+                pp
                 className="mr-2"
                 aria-label="Search"
+                onChange={(e) => setSearch(e.target.value)}
               />
             </Form>
           </Nav>
           <Nav>
-            <Nav.Link>
-              <Link to="/mynotes">My Notes</Link>
-            </Nav.Link>
-            <NavDropdown title="Tushar" id="navbarScrollingDropdown">
-              <NavDropdown.Item>My Profile</NavDropdown.Item>
-              <NavDropdown.Item onClick={LogoutHandler}>
-                Logout
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-            </NavDropdown>
+            {userInfo ? (
+              <>
+                <Nav.Link>
+                  <Link to="/mynotes">My Notes</Link>
+                </Nav.Link>
+                <NavDropdown title="Profile" id="collasible-nav-dropdown">
+                  <NavDropdown.Item>
+                    <Link to="/profile">My Profile</Link>
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={LogoutHandler}>
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            ) : (
+              <Nav.Link>
+                <Link to="/login">Login</Link>
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
