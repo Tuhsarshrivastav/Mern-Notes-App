@@ -2,7 +2,7 @@ const expressAsyncHandler = require("express-async-handler");
 const Note = require("../models/noteModel");
 
 module.exports.getNotes = expressAsyncHandler(async (req, res) => {
-  const notes = await Note.findOne({ user: req.user._id });
+  const notes = await Note.find({ user: req.user._id });
   res.json(notes);
 });
 
