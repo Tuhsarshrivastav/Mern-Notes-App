@@ -1,30 +1,43 @@
 import MainScreen from "../components/MainScreen";
 import { Button, Card, Badge, Accordion } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios from "axios";
-
-import { useEffect, useState } from "react";
+import { listNotes } from "../actions/notesActions";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "../components/Loading";
+import ErrorMessage from "../components/ErrorMessage";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 const MyNotes = () => {
-  const [notes, setNotes] = useState([]);
+  const noteList = useSelector((state) => state.noteList);
+  const { loading, notes, error } = noteList;
+
+  const userLogin = useSelector((state) => state.userLogin);
+
+  const { userInfo } = userLogin;
+  const history = useHistory();
+
+  const dispatch = useDispatch();
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure")) {
     }
   };
-  const GetData = async () => {
-    const { data } = await axios.get("/api/notes");
-    setNotes(data);
-  };
+
   useEffect(() => {
-    GetData();
-  }, []);
+    dispatch(listNotes());
+    if (!userInfo) {
+      history.push("/");
+    }
+  }, [dispatch]);
   return (
-    <MainScreen title="welcome back tushar ...">
+    <MainScreen title={`welcome back${userInfo.name}...`}>
       <Link to="createnote">
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
           Create New Note
         </Button>
       </Link>
-      {notes.map((note) => (
+      {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+      {loading && <Loading />}
+      {notes?.map((note) => (
         <Accordion key={note._id}>
           <Card style={{ margin: 10 }}>
             <Card.Header style={{ display: "flex" }}>
@@ -61,7 +74,10 @@ const MyNotes = () => {
                 <blockquote className="blockquote mb-0">
                   <p>{note.content}</p>
                   <footer className="blockquote-footer">
-                    Created on - Date
+                    Created on{" "}
+                    <cite title="Source Title">
+                      {note.createdAt.substring(0, 10)}
+                    </cite>
                   </footer>
                 </blockquote>
               </Card.Body>
